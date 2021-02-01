@@ -4,26 +4,34 @@ import ReactDOM from "react-dom";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
 const App = () => {
+  // 要素への参照
   const ref = useRef<any>();
+  // inputの用語管理
   const [input, setInput] = useState("");
+  // npm mudulesから取得した値を管理
   const [code, setCode] = useState("");
 
   const startService = async () => {
+    // 値を保持
     ref.current = await esbuild.startService({
       worker: true,
       wasmURL: "./esbuild.wasm",
     });
   };
 
+  // 　初回のみ実行
   useEffect(() => {
     startService();
   }, []);
 
+  // Submitボタンクリック時の関数
   const onClick = async () => {
+    // ref.currentがない場合
     if (!ref.current) {
       return;
     }
 
+    // ref.currentのメソッドからbuildを実行
     const result = await ref.current.build({
       entryPoints: ["index.js"],
       bundle: true,
@@ -37,6 +45,7 @@ const App = () => {
 
     // console.log(result);
 
+    // 取得したコードをセット
     setCode(result.outputFiles[0].text);
   };
 
