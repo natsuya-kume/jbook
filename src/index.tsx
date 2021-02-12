@@ -6,10 +6,12 @@ import { fetchPlugin } from "./plugins/fetch-plugin";
 const App = () => {
   // 要素への参照
   const ref = useRef<any>();
+
+  // iframeへの参照
+  const iframe = useRef<any>();
+
   // inputの用語管理
   const [input, setInput] = useState("");
-  // npm mudulesから取得した値を管理
-  const [code, setCode] = useState("");
 
   const startService = async () => {
     // 値を保持
@@ -31,6 +33,9 @@ const App = () => {
       return;
     }
 
+    // iframeの内容をリセットするためのコード
+    iframe.current.srcdoc = html;
+
     // ref.currentのメソッドからbuildを実行
     const result = await ref.current.build({
       entryPoints: ["index.js"],
@@ -43,11 +48,29 @@ const App = () => {
       },
     });
 
-    // console.log(result);
-
-    // 取得したコードをセット
-    setCode(result.outputFiles[0].text);
+    iframe.current.contentWindow.postMessage(result.outputFiles[0].text, "*");
   };
+
+  // iframe内のhtmlドキュメント
+  const html = `
+    <html>
+      <head></head>
+      <body>
+        <div id="root"></div>
+        <script>
+          window.addEventListener('message',(event)=>{
+            try{
+              eval(event.data)
+            }catch(err){
+              const root=document.querySelector('#root');
+              root.innerHTML='<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>'
+              console.error(err)
+            }
+          },false);
+        </script>
+      </body>
+    </hmtl>
+  `;
 
   return (
     <div>
@@ -58,7 +81,12 @@ const App = () => {
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <pre>{code}</pre>
+      <iframe
+        ref={iframe}
+        sandbox="allow-scripts"
+        srcDoc={html}
+        title="preview"
+      />
     </div>
   );
 };
