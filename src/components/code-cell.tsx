@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CodeEditor from "./code-editor";
 import Preview from "./preview";
 import bundle from "../bundler/index";
@@ -9,11 +9,19 @@ const CodeCell = () => {
   // inputの用語管理
   const [input, setInput] = useState("");
 
-  // Submitボタンクリック時の関数
-  const onClick = async () => {
-    const output = await bundle(input);
-    setCode(output);
-  };
+  // inputの値が変わるごとに実行
+  useEffect(() => {
+    // １秒後に実行する  ※inputの値が変更されている間は下でキャンセルされる
+    const timer = setTimeout(async () => {
+      const output = await bundle(input);
+      setCode(output);
+    }, 750);
+
+    // useEffectが呼び出された後に自動的に呼ばれる 前のtimerをキャンセルする
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [input]);
 
   return (
     <Resizable direction="vertical">

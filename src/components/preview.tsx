@@ -35,7 +35,10 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
   useEffect(() => {
     // iframeの内容をリセットするためのコード
     iframe.current.srcdoc = html;
-    iframe.current.contentWindow.postMessage(code, "*");
+    // 正確なコードを取得するために時間を少し遅らせる
+    setTimeout(() => {
+      iframe.current.contentWindow.postMessage(code, "*");
+    }, 50);
   }, [code]);
   return (
     <div className="preview-wrapper">
