@@ -5,6 +5,7 @@ import bundle from "../bundler/index";
 import Resizable from "./resizable";
 const CodeCell = () => {
   const [code, setCode] = useState("");
+  const [err, setError] = useState("");
 
   // inputの用語管理
   const [input, setInput] = useState("");
@@ -14,7 +15,8 @@ const CodeCell = () => {
     // １秒後に実行する  ※inputの値が変更されている間は下でキャンセルされる
     const timer = setTimeout(async () => {
       const output = await bundle(input);
-      setCode(output);
+      setCode(output.code);
+      setError(output.err);
     }, 750);
 
     // useEffectが呼び出された後に自動的に呼ばれる 前のtimerをキャンセルする
@@ -32,7 +34,7 @@ const CodeCell = () => {
             onChange={(value) => setInput(value)}
           />
         </Resizable>
-        <Preview code={code} />
+        <Preview code={code} err={err} />
       </div>
     </Resizable>
   );
