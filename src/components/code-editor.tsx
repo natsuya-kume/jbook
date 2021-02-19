@@ -13,6 +13,7 @@ interface CodeEditorProps {
   onChange(value: string): void;
 }
 
+// code-cell.tsxからpropsを受け取る
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
   // エディターへの参照
   const editorRef = useRef<any>();
@@ -43,7 +44,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     );
   };
 
-  // フォーマット関数
+  // エディタ内のコードをフォーマットする関数
   const onFormatClick = () => {
     //エディターからvalueを取得
     const unformatted = editorRef.current.getModel().getValue();
@@ -73,20 +74,20 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
       </button>
       <MonacoEditor
         options={{
-          wordWrap: "on",
-          minimap: { enabled: false },
-          showUnused: false,
-          folding: false,
-          lineNumbersMinChars: 3,
           fontSize: 16,
-          scrollBeyondLastLine: false,
+          wordWrap: "on",
+          folding: false,
+          showUnused: false,
           automaticLayout: true,
+          lineNumbersMinChars: 3,
+          minimap: { enabled: false },
+          scrollBeyondLastLine: false,
         }}
-        editorDidMount={onEditorDidMount}
-        value={initialValue}
         theme="dark"
-        language="javascript"
         height="100%"
+        language="javascript"
+        value={initialValue}
+        editorDidMount={onEditorDidMount}
       />
     </div>
   );
