@@ -1,5 +1,6 @@
 import * as esbuild from "esbuild-wasm";
 
+// onResolve() で「このプラグインで解決するモジュールだよ」という印を名前空間という形で付けておく
 export const unpkgPathPlugin = () => {
   return {
     name: "unpkg-path-plugin",
@@ -18,7 +19,7 @@ export const unpkgPathPlugin = () => {
         };
       });
 
-      // モジュールのメインのファイルを扱う
+      // モジュールの/.~/で始まるファイルを扱う
       build.onResolve({ filter: /.*/ }, async (args: any) => {
         return {
           namespace: "a",
