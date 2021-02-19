@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
-import CodeEditor from "./code-editor";
-import Preview from "./preview";
 import bundle from "../bundler/index";
+import Preview from "./preview";
+import CodeEditor from "./code-editor";
 import Resizable from "./resizable";
+
 const CodeCell = () => {
+  // bundle後のコードとエラーを管理する
   const [code, setCode] = useState("");
   const [err, setError] = useState("");
 
-  // inputの用語管理
+  // エディタ内で入力されたテキストの管理
   const [input, setInput] = useState("");
 
   // inputの値が変わるごとに実行
   useEffect(() => {
-    // １秒後に実行する  ※inputの値が変更されている間は下でキャンセルされる
+    // 0.75秒後に実行する  ※inputの値が変更されている間は下でキャンセルされる
     const timer = setTimeout(async () => {
+      // bundlerディレクトリのindex.ts内bundle関数にinputを渡し、返ってきた値をoutputに代入
       const output = await bundle(input);
       setCode(output.code);
       setError(output.err);
