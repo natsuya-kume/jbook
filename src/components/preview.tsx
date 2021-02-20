@@ -1,6 +1,7 @@
 import "./preview.css";
 import { useEffect, useRef } from "react";
 
+// propsで受け取る値の型宣言
 interface PreviewProps {
   code: string;
   err: string;
@@ -40,6 +41,7 @@ const Preview: React.FC<PreviewProps> = ({ code, err }) => {
   // iframeへの参照
   const iframe = useRef<any>();
 
+  // codeの値が変更されるたびに実行
   useEffect(() => {
     // iframeの内容をリセットするためのコード
     iframe.current.srcdoc = html;
@@ -48,6 +50,7 @@ const Preview: React.FC<PreviewProps> = ({ code, err }) => {
       iframe.current.contentWindow.postMessage(code, "*");
     }, 50);
   }, [code]);
+
   return (
     <div className="preview-wrapper">
       <iframe
