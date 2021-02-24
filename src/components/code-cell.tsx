@@ -1,3 +1,4 @@
+// コードセル全体を管理するコンポーネント
 import "./code-cell.css";
 import { useEffect } from "react";
 import Preview from "./preview";
@@ -12,15 +13,15 @@ interface CodeCellProps {
 }
 
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
-  // エディタ内で入力されるテキストの管理
+  // useAction()を使用して、updateCell(id,content), createBundle(cellId,input)のactionを取得 ()の中は引数
   const { updateCell, createBundle } = useActions();
 
-  // bundleの状態を取得できる
+  // 別ファイルで定義したuseTypedSelectorでbundleの状態を取得
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
-  // inputの値が変わるごとに実行
+  // cellの情報が変わるごとに実行
   useEffect(() => {
-    // bundleがない場合
+    // bundleがない場合に走る
     if (!bundle) {
       createBundle(cell.id, cell.content);
       return;

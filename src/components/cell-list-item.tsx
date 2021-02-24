@@ -10,6 +10,7 @@ interface CellListItemProps {
 
 const CellListItem: React.FC<CellListItemProps> = ({ cell }) => {
   let child: JSX.Element;
+  // cell.typeが'code'/'text'どちらであるかをif文で判定
   if (cell.type === "code") {
     child = (
       <>

@@ -1,13 +1,18 @@
+// CodeEditorかTextEditorのどちらかを画面に追加するコンポーネント
 import "./add-cell.css";
 import { useActions } from "../hooks/use-actions";
 
+// forceVisible={cells.length === 0}より、true/falseで型を宣言
 interface AddCellProps {
   previousCellId: string | null;
   forceVisible?: boolean;
 }
 
 const AddCell: React.FC<AddCellProps> = ({ forceVisible, previousCellId }) => {
+  // useAction()を使用して、insertCellAfter(id,CellTyles)のactionを取得 ()の中は引数
   const { insertCellAfter } = useActions();
+
+  // ボタンを3つ作り、onClickメソットでそれぞれのボタンがクリックされた時に、actionを呼び出してdispatchする
   return (
     <div className={`add-cell ${forceVisible && "force-visible"}`}>
       <div className="add-buttons">
