@@ -6,6 +6,7 @@ interface ActionBarProps {
 }
 
 const ActionBar: React.FC<ActionBarProps> = ({ id }) => {
+  // useActions()を使用して、moveCell(id,direction), deleteCell(id)のactionを取得 ()の中は引数
   const { moveCell, deleteCell } = useActions();
   return (
     <div className="action-bar">
