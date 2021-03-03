@@ -29,6 +29,8 @@ const bundle = async (rawCode: string) => {
         "process.env.NODE_ENV": '"production"',
         gloabal: "window",
       },
+      jsxFactory: "_React.createElement",
+      jsxFragment: "_React.Fragment",
     });
     // bundle後のtext情報とエラー文字を返す
     return {

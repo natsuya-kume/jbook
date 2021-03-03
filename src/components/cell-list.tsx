@@ -1,3 +1,4 @@
+import "./cell-list.css";
 import { Fragment } from "react";
 import { useTypedSelector } from "../hooks/use-typed-selector";
 import CellListItem from "./cell-list-item";
@@ -22,7 +23,7 @@ const CellList: React.FC = () => {
 
   // cellsの数が０になっている時は、add-cellコンポーネントをずっと表示したいから、forceVisibleをpropsとして渡す
   return (
-    <div>
+    <div className="cell-list">
       <AddCell forceVisible={cells.length === 0} previousCellId={null} />
       {renderedCells}
     </div>
