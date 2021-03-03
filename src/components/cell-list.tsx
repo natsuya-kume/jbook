@@ -9,7 +9,7 @@ const CellList: React.FC = () => {
     order.map((id) => data[id])
   );
 
-  console.log(cells);
+  // console.log(cells);
 
   // 上記cells配列をmapして、必要な情報(全ての情報を含む全体の配列がmapされて、オブジェクトがいくつも取り出されている状態)を
   // cell-list-itemコンポーネントとadd-cellコンポーネントにpropsとして渡す

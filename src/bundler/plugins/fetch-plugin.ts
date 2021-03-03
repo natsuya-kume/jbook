@@ -7,7 +7,7 @@ import localForage from "localforage";
 const fileCache = localForage.createInstance({
   name: "filecache",
 });
-console.log(fileCache);
+// console.log(fileCache);
 
 // プラグインを作成する　 ＊引数inputCodeには、コードエディタ内で入力したテキストが入ってくる
 export const fetchPlugin = (inputCode: string) => {
