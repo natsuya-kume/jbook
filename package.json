@@ -22,6 +22,7 @@
     "esbuild-wasm": "0.8.27",
     "immer": "^8.0.1",
     "jscodeshift": "0.11.0",
+    "lerna": "3.22.1",
     "localforage": "^1.9.0",
     "monaco-editor": "^0.22.3",
     "monaco-jsx-highlighter": "0.0.15",
@@ -40,7 +41,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "node lacal-api.js"
   },
   "eslintConfig": {
     "extends": [
